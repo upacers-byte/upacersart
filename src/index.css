@@ -1,0 +1,193 @@
+@import "tailwindcss";
+
+@theme {
+  --color-dark-0: #0a0a0b;
+  --color-dark-50: #111114;
+  --color-dark-100: #18181c;
+  --color-dark-200: #212126;
+  --color-dark-300: #2c2c33;
+  --color-dark-400: #3a3a42;
+  --color-dark-500: #e0e0e0;
+  --color-dark-600: #d0d0d0;
+  --color-dark-700: #c0c0c0;
+  --color-dark-800: #b4b4bb;
+  --color-dark-900: #dcdce0;
+  --color-dark-950: #f4f4f6;
+
+  --color-accent-50: #f7fee7;
+  --color-accent-100: #ecfccb;
+  --color-accent-200: #d9f99d;
+  --color-accent-300: #bef264;
+  --color-accent-400: #a3e635;
+  --color-accent-500: #84cc16;
+  --color-accent-600: #65a30d;
+  --color-accent-700: #4d7c0f;
+  --color-accent-800: #3f6212;
+  --color-accent-900: #365314;
+  --color-accent-950: #1a2e05;
+
+  --color-glow-1: #84cc16;
+  --color-glow-2: #06b6d4;
+  --color-glow-3: #f59e0b;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-dark-0);
+    color: var(--color-dark-900);
+  }
+}
+
+/* Glassmorphism — dark variant */
+.glass-dark {
+  background: rgba(24, 24, 28, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.glass-dark-strong {
+  background: rgba(24, 24, 28, 0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #4d7c0f, #84cc16, #a3e635);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.gradient-text-light {
+  background: linear-gradient(135deg, #d9f99d, #bef264);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.gradient-text-cyan {
+  background: linear-gradient(135deg, #06b6d4, #22d3ee);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Ambient glow */
+.ambient-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.09;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Hover card lift */
+.card-lift {
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Shimmer effect */
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.08) 50%, transparent 60%);
+  animation: shimmer 3.5s infinite;
+}
+@keyframes shimmer {
+  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+/* Float */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-14px); }
+}
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Lightbox backdrop */
+.lightbox-backdrop {
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(8px);
+}
+
+/* ════════════════════════════════════════════
+   IMAGE PROTECTION — Prevent casual saving
+   ════════════════════════════════════════════ */
+
+/* 1. Disable selection/highlight on all images */
+img {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  -webkit-touch-callout: none;
+}
+
+/* 2. Protected image wrapper — places a transparent overlay over photos */
+.protected-image-wrap {
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.protected-image-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: transparent;
+  cursor: default;
+}
+
+/* 3. Lightbox protection — stronger overlay for full-size images */
+.lightbox-image-shield {
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+.lightbox-image-shield::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: transparent;
+  cursor: default;
+}
+
+/* 4. Global protection — prevent text/image selection on the whole gallery */
+.gallery-protected {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
